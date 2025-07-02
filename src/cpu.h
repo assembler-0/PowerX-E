@@ -11,7 +11,6 @@ typedef struct {
     
     // Floating Point Registers (32 x 64-bit)
     double fpr[32];
-    //TODO: add the vector registers, not yet needed
 
     // Special Purpose Registers (most commonly used first)
     uint64_t pc;        // Program Counter

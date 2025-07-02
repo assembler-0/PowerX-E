@@ -7,10 +7,8 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -fsanitize=address")
 
 set(SOURCES
     src/main.c
-    src/cpu_state.c
-    src/memory.c
+        src/memory.c
     src/instruction.c
-    src/emulator.c
 )
 
 add_executable(pwrxe ${SOURCES})

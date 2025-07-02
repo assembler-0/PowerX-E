@@ -32,9 +32,12 @@ typedef struct {
     // Operand fields (not all used for every instruction)
     uint8_t rt, ra, rb;     // Register operands
     uint8_t bt, ba, bb;     // Bit field operands
+    uint8_t frt, fra, frb, frc; // Floating point registers
     uint16_t imm;           // Immediate value
     int16_t simm;           // Sign-extended immediate
     uint32_t addr;          // Address for branches
+    uint16_t spr;           // Special purpose register
+    uint8_t sh, mb, me;     // Shift and mask fields
     
     // Flags
     bool rc;                // Record bit
@@ -67,6 +70,22 @@ const char* get_instruction_name(const ppc_instruction_t* inst);
 #define INST_BD(x)          (((int16_t)((x) & 0xFFFC)))
 #define INST_XO_X(x)        (((x) >> 1) & 0x3FF)
 #define INST_XO_XL(x)       (((x) >> 1) & 0x3FF)
+
+// Additional field extraction macros
+#define INST_BT(x)          (((x) >> 21) & 0x1F)
+#define INST_BA(x)          (((x) >> 16) & 0x1F)
+#define INST_BB(x)          (((x) >> 11) & 0x1F)
+#define INST_SH(x)          (((x) >> 11) & 0x1F)
+#define INST_MB(x)          (((x) >> 6) & 0x1F)
+#define INST_ME(x)          (((x) >> 1) & 0x1F)
+#define INST_SPR(x)         ((((x) >> 16) & 0x1F) | (((x) >> 6) & 0x3E0))
+#define INST_FRT(x)         (((x) >> 21) & 0x1F)
+#define INST_FRA(x)         (((x) >> 16) & 0x1F)
+#define INST_FRB(x)         (((x) >> 11) & 0x1F)
+#define INST_FRC(x)         (((x) >> 6) & 0x1F)
+#define INST_OE(x)          (((x) >> 10) & 1)
+#define INST_AA(x)          (((x) >> 1) & 1)
+#define INST_LK(x)          ((x) & 1)
 
 // Common PowerPC opcodes
 #define PPC_OP_TWI          3
